@@ -259,7 +259,7 @@ class PackageDetailUpdateDelete(APIView):
 
 
 class PackageBookingCreate(APIView):
-    # permission_classes =[IsAuthenticated,IsSuperAdmin]
+    permission_classes =[IsAuthenticated]
     def get(self, request):
         try:
             packages = Package.objects.all()
@@ -273,7 +273,7 @@ class PackageBookingCreate(APIView):
                 cancelled_count = package_bookings.filter(booking_status='cancelled').count()
                 total_cost = package_bookings.aggregate(Sum('package__cost'))['package__cost__sum']
 
-                # Calculate total number of days booked
+               
                 total_days_booked = package_bookings.aggregate(Sum('no_of_days'))['no_of_days__sum']
 
                 # Construct package statistics
@@ -310,7 +310,7 @@ class PackageBookingCreate(APIView):
 
 
 class ReviewAPIView(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request):
         reviews = Review.objects.all()
